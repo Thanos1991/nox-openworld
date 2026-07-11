@@ -56,8 +56,17 @@ Game data (not in git): owner's GOG install at `C:\GOG Games\Nox`.
 ## Current state / next steps
 
 - [x] Reconnaissance dumps (this repo: data/, docs/, renders/)
-- [ ] Decode ObjectData records for exit objects (destination map + waypoint)
-- [ ] Hello-world Lua/NS4 script on a campaign map (verify load on device)
-- [ ] Two-zone proof: bidirectional transition between two campaign maps
+- [x] Object inventories per map (required fixing RawSection aliasing in opennox-libs
+      maps/reader.go — our fork has the fix; consider upstreaming)
+- [x] Transition mechanism identified: `InvisibleExitArea` trigger objects (100 maps)
+      + script-driven map-switch calls; destinations appear as strings in ScriptData
+      (see map_refs in data/maps.json)
+- [ ] Hello-world Lua/NS4 script on a campaign map (verify load on device; the engine
+      logs `[script] loading script(s) for map ...` — look for Go/Lua file discovery
+      in opennox/src script loading)
+- [ ] Two-zone proof: bidirectional transition between two campaign maps (candidate
+      pair: con06a <-> con06b which are already bidirectional, or wiz01a <-> wiz02a)
 - [ ] Engine-side persistent world-flag store
-- [ ] Hub town selection and quest framework design
+- [ ] Hub town selection (shopkeeper-rich maps are candidates — see notable_objects)
+- [ ] maprender fails on 85 of 157 maps ("invalid image size 0x0" etc.) — improve
+      renderer coverage for complete atlas imagery
