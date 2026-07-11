@@ -22,6 +22,13 @@ func main() {
 	if m == nil {
 		return
 	}
+	if m.Waypoints != nil {
+		fmt.Println("waypoints:")
+		for _, w := range m.Waypoints.Waypoints {
+			fmt.Printf("  id=%-4d pos=(%.0f,%.0f) flags=%d name=%q links=%d\n",
+				w.ID, w.Pos.X, w.Pos.Y, w.Flags, w.Name, len(w.Links))
+		}
+	}
 	fmt.Println("unknown sections:")
 	for _, s := range m.Unknown {
 		fmt.Printf("  %-24s %8d bytes  head=%s\n", s.Name, len(s.Data), hex.EncodeToString(s.Data[:min(24, len(s.Data))]))
