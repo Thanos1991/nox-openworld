@@ -4,6 +4,10 @@
 -- where the wiz01a transition drops them. Walk away to arm the gate, walk
 -- back onto the arrival point to travel back. Works for any zone pair.
 
+-- The engine only injects the Nox global when a map has NO Lua file
+-- (see opennox-libs script/lua/vm.go ExecFile); scripts must require it.
+local Nox = require("Nox.Map.Script.v0")
+
 local origin = nil
 local armed = false
 local done = false
