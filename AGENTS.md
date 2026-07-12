@@ -94,11 +94,17 @@ script pattern: record spawn, arm at 150 units away, trigger within 40).
 - [x] `Nox.LoadMap` engine capability (script.MapSwitcher in both forks)
 - [x] Open World as separate mode: menu button, start-map remap, ow_ map set
       (owgen), wizard start in Galava (ow_wiz02a), gates ow_wiz02a <-> ow_wiz01a
+- [x] Nox.LoadMap deadlock fixed (never QueueInLoop from script code — Lua runs
+      on the server loop goroutine that drains the channel; Server.SwitchMap
+      only flags the switch and is safe to call directly)
+- [x] Map transitions crashed the client in getCursorAnimFrame ("not an
+      animation" panic mid-reload) — hardened in the fork
+- [x] Arrival placement via `Nox.LoadMap("map:WaypointName")` (engine-native
+      syntax, Server.SwitchMap) — Galava→forest lands at FromGalavaWP;
+      forest→Galava lands at PlayerStart which IS the Galava gate
 - [ ] On-device playtest of the Open World wizard start + both gate directions
 - [ ] Strip/neutralize `InvisibleExitArea` trigger objects in ow_ maps if they
       turn out to misbehave without their scripts
-- [ ] Zone entry should place the player at the matching gate, not PlayerStart
-      (arrivals from the forest should appear at Galava's forest road)
 - [ ] Engine-side persistent world-flag store
 - [ ] Hub town confirmation (Galava is the wizard candidate; shopkeeper-rich maps
       are flagged in notable_objects)
