@@ -42,6 +42,7 @@ type MapGates struct {
 // The zones that make up the openworld. Connections to maps outside this set
 // are skipped (logged as frontier — future expansion).
 var include = []string{
+	// wizard campaign region
 	"wiz01a", "wiz02a", "wiz02b", "wiz02c", "wiz03a", "wiz03b", "wiz03c",
 	"wiz04a", "wiz04b", "wiz04c", "wiz05a", "wiz05b", "wiz05c",
 	"wiz06a", "wiz06b", "wiz06c",
@@ -49,6 +50,22 @@ var include = []string{
 	"wiz08a", "wiz08b", "wiz08c", "wiz08d", "wiz08e",
 	"wiz09a", "wiz09b", "wiz09c", "wiz09d",
 	"wiz10a", "wiz10b", "wiz10c", "wiz10d", "wiz11a",
+	// warrior campaign region
+	"war01a", "war02a", "war02b", "war03a", "war03b", "war03c", "war03d",
+	"war04a", "war04b", "war04c", "war05a", "war05b", "war05c",
+	"war06a", "war06b",
+	"war07a", "war07b", "war07c", "war07d", "war07e", "war07f", "war07g", "war07h",
+	"war08a", "war08b", "war08c", "war08d", "war08e",
+	"war09a", "war09b", "war09c", "war09d",
+	"war10a", "war10b", "war10c", "war10d", "war11a",
+	// conjurer campaign region
+	"con01a", "con02a", "con03a", "con03b",
+	"con04a", "con04b", "con04c", "con05a", "con05b", "con05c",
+	"con06a", "con06b",
+	"con07a", "con07b", "con07c", "con07d", "con07e", "con07f", "con07g", "con07h",
+	"con08a", "con08b", "con08c", "con08d", "con08e",
+	"con09a", "con09b", "con09c", "con09d",
+	"con10a", "con10b", "con10c", "con10d", "con11a",
 }
 
 // Overrides for exit triggers whose destination is script-driven (empty in
@@ -56,6 +73,9 @@ var include = []string{
 var destOverride = map[string]string{
 	"wiz03b@4652,1492": "wiz03c", // confirmed by map waypoint Wiz03cExitWP
 	"wiz07c@2266,3370": "wiz08a", // wiz08a holds the return gate + FromWiz7WP
+	"con10b@3151,5290": "con10a", // geometry-identical to wiz10b/war10b's 10a gate
+	"war03d@945,4384":  "war03b", // war03d's only campaign reference
+	"con03a@651,3421":  "con04a", // campaign flow con03a -> con04a (map_refs)
 }
 
 // Gates to drop entirely (unknown script-only destinations).
