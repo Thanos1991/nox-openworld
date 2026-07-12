@@ -3,12 +3,14 @@
 
 local Nox = require("Nox.Map.Script.v0")
 
+local FACTION = "conjurer" -- this zone's campaign faction
+
 local GATES = {
     { x = 345, y = 368, dest = "ow_con02a:@2368,3636", name = "con02a" },
     { x = 231, y = 4646, dest = "ow_con03b:@5368,1798", name = "con03b" },
     { x = 651, y = 3421, dest = "ow_con04a:@4576,1861", name = "con04a" },
-    { x = 571, y = 414, dest = "ow_con08a:@5439,3875", name = "con08a" },
-    { x = 481, y = 414, dest = "ow_war08a:@5439,3875", name = "war08a" },
+    { x = 481, y = 414, dest = "ow_con08a:@5439,3875", name = "con08a" },
+    { x = 571, y = 414, dest = "ow_war08a:@5439,3875", name = "war08a" },
     { x = 391, y = 414, dest = "ow_wiz08a:@5439,3875", name = "wiz08a" },
 }
 
@@ -19,13 +21,32 @@ local HINT = 250  -- distance at which the road hint prints
 local armed = {}
 local hinted = {}
 local fired = false
+local factionsSet = false
+
+-- Put the player on their class team and this zone's NPCs on the zone's
+-- faction team, so your own faction is friendly and other factions are
+-- hostile (same team = allied; see engine IsEnemyTo).
+local function setFactions()
+    Nox.SetMapUnitsTeam(FACTION)
+    local class = Nox.HostClass()
+    if class ~= "" then
+        Nox.SetHostTeam(class)
+    else
+        -- unknown class: ally with this zone so the player isn't mobbed
+        Nox.SetHostTeam(FACTION)
+    end
+end
 
 function OnFrame()
-    if fired then
-        return
-    end
     local p = Nox.Players.host
     if p == nil then
+        return
+    end
+    if not factionsSet then
+        factionsSet = true
+        setFactions()
+    end
+    if fired then
         return
     end
     local x, y = p:Pos()
