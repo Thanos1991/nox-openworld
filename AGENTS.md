@@ -121,11 +121,12 @@ arrivals (Server.SwitchMap / game.go), landing the player on the twin gate.
 - [x] Transit-to-menu bug: SwitchMap must pass the map path WITH ".map" —
       loaders build "maps/<dir>/<path>" and abort on a bare name (log:
       "stat ...ow_wiz01a.nxz: no such file")
-- [x] Full wizard region wired: 36 zones, 73 gates, one connected component
-      from the forest to Hecubah's lair (see docs/openworld-map.md)
-- [ ] On-device playtest of the Open World wizard start + gate travel
-- [ ] Warrior/conjurer regions: clone + wire (their zones exist unscripted;
-      wiz08a -> con03a is the natural first bridge)
+- [x] Full world wired: all three campaigns, 107 zones, 233 gates, one
+      connected component (BFS-verified from the hub; docs/openworld-map.md).
+      Cross-campaign junctions: con03a (mana mines, reached from wiz08a,
+      war08a, con08a) and con05b -> war06a.
+- [ ] On-device playtest of the Open World start + gate travel (phone was
+      away overnight; deploy-world.ps1 + APK install when it returns)
 - [ ] Strip/neutralize `InvisibleExitArea` trigger objects in ow_ maps if they
       turn out to misbehave without their scripts (they carry dest strings but
       the campaign used scripts to fire them; observed inert so far)
