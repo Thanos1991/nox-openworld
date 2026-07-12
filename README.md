@@ -34,8 +34,13 @@ the original campaigns stay byte-identical and fully playable.
   deploys maps + scripts to the PC install and (over adb) the Android port.
   Generated maps contain original game data and are never committed.
 
-Current world: `ow_wiz02a` (Galava) ⇄ `ow_wiz01a` (the forest), with
-warrior/conjurer starting zones cloned but not yet scripted.
+Current world: **the full wizard region — 36 zones, 73 bidirectional gates,
+one connected component from the forest to Hecubah's lair.** See
+[docs/openworld-map.md](docs/openworld-map.md) for the world map (mermaid)
+and the complete gate table. The connections come from the original maps'
+own exit-trigger objects (`tools/owgates` extracts positions and embedded
+destinations; `tools/owworld` generates the zone scripts and the map doc).
+Warrior/conjurer starting zones are cloned but not yet scripted.
 
 ## What's here
 
