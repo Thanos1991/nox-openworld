@@ -39,23 +39,29 @@ Get-ChildItem $world -Directory | ForEach-Object {
 
 $dev = & $Adb devices 2>$null | Select-String -Pattern "device$"
 if ($dev) {
+    # adb writes progress to stderr, which PS 5.1 + ErrorActionPreference
+    # Stop escalates into a terminating error — route pushes through cmd.
+    $ErrorActionPreference = "Continue"
     # ow_ maps: push the generated .map files.
     foreach ($n in $owNames) {
         $ow = "ow_$n"
         $map = Join-Path $GameMaps "$ow\$ow.map"
         if (Test-Path $map) {
-            & $Adb push $map "/sdcard/Download/Nox/maps/$ow/$ow.map" | Out-Null
-            Write-Host "phone: maps/$ow/$ow.map pushed"
+            cmd /c "`"$Adb`" push `"$map`" `"/sdcard/Download/Nox/maps/$ow/$ow.map`" 2>nul" | Out-Null
+            if ($LASTEXITCODE -ne 0) { Write-Host "phone: PUSH FAILED maps/$ow/$ow.map" }
+            else { Write-Host "phone: maps/$ow/$ow.map pushed" }
         }
     }
     # Scripts from the repo.
     Get-ChildItem $world -Directory | ForEach-Object {
         Get-ChildItem $_.FullName -File | ForEach-Object {
             $rel = "$($_.Directory.Name)/$($_.Name)"
-            & $Adb push $_.FullName "/sdcard/Download/Nox/maps/$rel" | Out-Null
-            Write-Host "phone: maps/$rel pushed"
+            cmd /c "`"$Adb`" push `"$($_.FullName)`" `"/sdcard/Download/Nox/maps/$rel`" 2>nul" | Out-Null
+            if ($LASTEXITCODE -ne 0) { Write-Host "phone: PUSH FAILED maps/$rel" }
+            else { Write-Host "phone: maps/$rel pushed" }
         }
     }
+    $ErrorActionPreference = "Stop"
     Write-Host "Note: restart the app so the data mirror picks up new files."
 } else {
     Write-Host "phone: not attached, skipped"
