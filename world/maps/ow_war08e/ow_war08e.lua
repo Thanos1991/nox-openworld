@@ -4,7 +4,7 @@
 local Nox = require("Nox.Map.Script.v0")
 
 local GATES = {
-    { x = 4330, y = 3439, dest = "ow_war08a:@1161,3300", name = "war08a" },
+    { x = 4330, y = 3439, dest = "ow_war08a:@2657,1487", name = "war08a" },
     { x = 1035, y = 3335, dest = "ow_war08d:@5345,4953", name = "war08d" },
 }
 

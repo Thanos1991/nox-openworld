@@ -37,10 +37,11 @@ type Pos struct {
 }
 
 type Gate struct {
-	X    float32 `json:"x"`
-	Y    float32 `json:"y"`
-	Dest string  `json:"dest,omitempty"` // destination map (lowercase, no ext)
-	N    int     `json:"n"`              // trigger objects merged into this gate
+	X      float32 `json:"x"`
+	Y      float32 `json:"y"`
+	Dest   string  `json:"dest,omitempty"`    // destination map (lowercase, no ext)
+	DestWP string  `json:"dest_wp,omitempty"` // arrival waypoint name, when the trigger carries one
+	N      int     `json:"n"`                 // trigger objects merged into this gate
 }
 
 type MapGates struct {
@@ -82,8 +83,9 @@ func main() {
 }
 
 type exitRec struct {
-	pos  Pos
-	dest string
+	pos    Pos
+	dest   string
+	destWP string
 }
 
 func extract(mapsDir, name string, mg *MapGates) error {
@@ -155,7 +157,8 @@ func extract(mapsDir, name string, mg *MapGates) error {
 			mg.Starts = append(mg.Starts, p)
 			continue
 		}
-		exits = append(exits, exitRec{pos: p, dest: exitDest(tail)})
+		d, wp := exitDest(tail)
+		exits = append(exits, exitRec{pos: p, dest: d, destWP: wp})
 	}
 	mg.Gates = clusterGates(exits)
 	return nil
@@ -188,25 +191,25 @@ func recPos(rec []byte) (Pos, []byte, error) {
 	return Pos{X: x, Y: y}, rec[posOff+9:], nil
 }
 
-// exitDest extracts the destination map from an InvisibleExitArea payload
-// tail: [u32 len][string]... — normalized to lowercase without extension.
-func exitDest(tail []byte) string {
+// exitDest extracts the destination from an InvisibleExitArea payload tail:
+// [u32 len][string]... — "Map.map" or "Map.map:ArrivalWP". Returns the map
+// (lowercase, no extension) and the arrival waypoint name (original case).
+func exitDest(tail []byte) (dest, wp string) {
 	if len(tail) < 4 {
-		return ""
+		return "", ""
 	}
 	n := int(binary.LittleEndian.Uint32(tail[0:]))
 	if n <= 0 || 4+n > len(tail) {
-		return ""
+		return "", ""
 	}
-	s := string(tail[4 : 4+n])
-	s = strings.TrimRight(s, "\x00")
-	s = strings.ToLower(s)
-	// destinations often carry a waypoint suffix ("Map.map:SomeWP")
+	s := strings.TrimRight(string(tail[4:4+n]), "\x00")
 	if i := strings.IndexByte(s, ':'); i >= 0 {
+		wp = s[i+1:]
 		s = s[:i]
 	}
+	s = strings.ToLower(s)
 	s = strings.TrimSuffix(s, ".map")
-	return s
+	return s, wp
 }
 
 func clusterGates(exits []exitRec) []Gate {
@@ -242,6 +245,7 @@ func clusterGates(exits []exitRec) []Gate {
 		x, y float64
 		n    int
 		dest string
+		wp   string
 	}
 	sums := make(map[int]*acc)
 	for i, e := range exits {
@@ -251,6 +255,9 @@ func clusterGates(exits []exitRec) []Gate {
 			s = &acc{dest: e.dest}
 			sums[r] = s
 		}
+		if s.wp == "" {
+			s.wp = e.destWP
+		}
 		s.x += float64(e.pos.X)
 		s.y += float64(e.pos.Y)
 		s.n++
@@ -259,7 +266,7 @@ func clusterGates(exits []exitRec) []Gate {
 	for _, s := range sums {
 		out = append(out, Gate{
 			X: float32(s.x / float64(s.n)), Y: float32(s.y / float64(s.n)),
-			Dest: s.dest, N: s.n,
+			Dest: s.dest, DestWP: s.wp, N: s.n,
 		})
 	}
 	sort.Slice(out, func(i, j int) bool {

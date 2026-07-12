@@ -136,9 +136,9 @@ destination's player start). Solid = real gates on both sides.
 | ow_con03a | 345, 368 | ow_con02a (con02a) | original doorway |
 | ow_con03a | 231, 4646 | ow_con03b (con03b) | original doorway |
 | ow_con03a | 651, 3421 | ow_con04a (con04a) | original doorway |
-| ow_con03a | 391, 414 | ow_con08a (con08a) | virtual (player start) |
-| ow_con03a | 571, 414 | ow_war08a (war08a) | virtual (player start) |
-| ow_con03a | 481, 414 | ow_wiz08a (wiz08a) | virtual (player start) |
+| ow_con03a | 571, 414 | ow_con08a (con08a) | virtual (player start) |
+| ow_con03a | 481, 414 | ow_war08a (war08a) | virtual (player start) |
+| ow_con03a | 391, 414 | ow_wiz08a (wiz08a) | virtual (player start) |
 | ow_con03b | 5428, 1748 | ow_con03a (con03a) | original doorway |
 | ow_con04a | 4576, 1861 | ow_con03a (con03a) | virtual (player start) |
 | ow_con04a | 1184, 943 | ow_con04b (con04b) | original doorway |
@@ -196,8 +196,8 @@ destination's player start). Solid = real gates on both sides.
 | ow_con09c | 318, 4960 | ow_con09d (con09d) | virtual (player start) |
 | ow_con09d | 2128, 5438 | ow_con09c (con09c) | original doorway |
 | ow_con09d | 903, 1062 | ow_con10a (con10a) | original doorway |
-| ow_con10a | 5578, 5511 | ow_con09d (con09d) | virtual (player start) |
-| ow_con10a | 5488, 5511 | ow_con10b (con10b) | virtual (player start) |
+| ow_con10a | 5488, 5511 | ow_con09d (con09d) | virtual (player start) |
+| ow_con10a | 5578, 5511 | ow_con10b (con10b) | virtual (player start) |
 | ow_con10b | 3151, 5290 | ow_con10a (con10a) | original doorway |
 | ow_con10b | 3084, 5227 | ow_con10c (con10c) | virtual (player start) |
 | ow_con10c | 1045, 2891 | ow_con10b (con10b) | original doorway |

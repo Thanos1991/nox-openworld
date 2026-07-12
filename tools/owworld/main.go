@@ -27,10 +27,11 @@ type Pos struct {
 }
 
 type Gate struct {
-	X    float32 `json:"x"`
-	Y    float32 `json:"y"`
-	Dest string  `json:"dest"`
-	N    int     `json:"n"`
+	X      float32 `json:"x"`
+	Y      float32 `json:"y"`
+	Dest   string  `json:"dest"`
+	DestWP string  `json:"dest_wp"`
+	N      int     `json:"n"`
 }
 
 type MapGates struct {
@@ -116,8 +117,9 @@ var names = map[string]string{
 
 type conn struct {
 	from, to string
-	pos      Pos  // gate position in `from`
-	virtual  bool // no original gate; placed at PlayerStart
+	pos      Pos    // gate position in `from`
+	arriveWP string // canonical arrival waypoint in `to`, when the trigger carried one
+	virtual  bool   // no original gate; placed at PlayerStart
 }
 
 type Waypoint struct {
@@ -149,15 +151,55 @@ func main() {
 	if err := json.Unmarshal(rawWP, &wps); err != nil {
 		panic(err)
 	}
-	// snapWalkable moves an arrival position to the nearest waypoint of the
-	// destination map: exit-trigger centers can sit inside door frames or
-	// off the walkable edge, and SetPos does not collision-check — players
-	// got stuck. Waypoints are AI path nodes, walkable by construction.
+	// Arrival placement. Exit-trigger centers can sit inside door frames or
+	// off the walkable edge and SetPos does not collision-check, so raw gate
+	// coordinates strand players. Waypoints are walkable AI path nodes, but
+	// audio/cinematic markers among them are not reliable ground.
+	badWP := func(name string) bool {
+		l := strings.ToLower(name)
+		return strings.Contains(l, "sound") || strings.Contains(l, "audio") ||
+			strings.Contains(l, "origin") || strings.Contains(l, "brief")
+	}
+	// wpByName resolves the canonical arrival waypoint carried by the
+	// original exit trigger ("Map.map:SomeWP"; dump names use that form too).
+	wpByName := func(m, name string) (Pos, bool) {
+		want := strings.ToLower(name)
+		if i := strings.LastIndexByte(want, ':'); i >= 0 {
+			want = want[i+1:]
+		}
+		for _, w := range wps[m] {
+			n := strings.ToLower(w.Name)
+			if i := strings.LastIndexByte(n, ':'); i >= 0 {
+				n = n[i+1:]
+			}
+			if n != "" && n == want {
+				return Pos{X: w.X, Y: w.Y}, true
+			}
+		}
+		return Pos{}, false
+	}
+	playerStart := func(m string) (Pos, bool) {
+		if mg := data[m]; mg != nil && len(mg.Starts) > 0 {
+			return mg.Starts[0], true
+		}
+		return Pos{}, false
+	}
 	snapWalkable := func(m string, p Pos) Pos {
+		// the zone's entrance case: the back gate sits near the player
+		// start, which is guaranteed walkable and historically correct
+		if st, ok := playerStart(m); ok {
+			dx, dy := float64(st.X-p.X), float64(st.Y-p.Y)
+			if dx*dx+dy*dy <= 600*600 {
+				return st
+			}
+		}
 		best := p
-		bestD := float64(400 * 400) // don't snap further than 400 units
+		bestD := float64(400 * 400)
 		found := false
 		for _, w := range wps[m] {
+			if badWP(w.Name) {
+				continue
+			}
 			dx := float64(w.X - p.X)
 			dy := float64(w.Y - p.Y)
 			d := dx*dx + dy*dy
@@ -168,9 +210,9 @@ func main() {
 			}
 		}
 		if !found {
-			if mg := data[m]; mg != nil && len(mg.Starts) > 0 {
+			if st, ok := playerStart(m); ok {
 				fmt.Printf("no waypoint near %s@%.0f,%.0f — arriving at player start\n", m, p.X, p.Y)
-				return mg.Starts[0]
+				return st
 			}
 		}
 		return best
@@ -203,7 +245,7 @@ func main() {
 				frontier = append(frontier, fmt.Sprintf("%s -> %s (outside world)", m, dest))
 				continue
 			}
-			conns[m] = append(conns[m], &conn{from: m, to: dest, pos: Pos{X: g.X, Y: g.Y}})
+			conns[m] = append(conns[m], &conn{from: m, to: dest, pos: Pos{X: g.X, Y: g.Y}, arriveWP: g.DestWP})
 		}
 	}
 
@@ -338,7 +380,17 @@ func main() {
 					break
 				}
 			}
-			ap := snapWalkable(c.to, pairArrival(c, idx, len(group)))
+			var ap Pos
+			if c.arriveWP != "" {
+				if p, ok := wpByName(c.to, c.arriveWP); ok {
+					ap = p // canonical arrival: the waypoint the original trigger names
+				} else {
+					fmt.Printf("arrival waypoint %q not found in %s\n", c.arriveWP, c.to)
+					ap = snapWalkable(c.to, pairArrival(c, idx, len(group)))
+				}
+			} else {
+				ap = snapWalkable(c.to, pairArrival(c, idx, len(group)))
+			}
 			nm := names[c.to]
 			if nm == "" {
 				nm = c.to

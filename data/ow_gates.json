@@ -48,12 +48,14 @@
         "x": 344.66666,
         "y": 367.66666,
         "dest": "con02a",
+        "dest_wp": "CrossroadWP",
         "n": 3
       },
       {
         "x": 231,
         "y": 4646,
         "dest": "con03b",
+        "dest_wp": "FromA",
         "n": 2
       }
     ]
@@ -70,6 +72,7 @@
         "x": 5428,
         "y": 1748,
         "dest": "con03a",
+        "dest_wp": "FromC",
         "n": 2
       }
     ]
@@ -156,18 +159,21 @@
         "x": 241,
         "y": 1529,
         "dest": "con05a",
+        "dest_wp": "SwampEntrance",
         "n": 1
       },
       {
         "x": 1355,
         "y": 5545,
         "dest": "con05c",
+        "dest_wp": "JailWP",
         "n": 3
       },
       {
         "x": 2820,
         "y": 4705,
         "dest": "con05c",
+        "dest_wp": "SecretHole",
         "n": 1
       },
       {
@@ -190,6 +196,7 @@
         "x": 4692,
         "y": 644,
         "dest": "con05b",
+        "dest_wp": "VillageWP",
         "n": 1
       }
     ]
@@ -282,6 +289,7 @@
         "x": 832,
         "y": 4753,
         "dest": "con07b",
+        "dest_wp": "ExitTowerWP",
         "n": 1
       },
       {
@@ -304,6 +312,7 @@
         "x": 3334,
         "y": 2150,
         "dest": "con07c",
+        "dest_wp": "FromTwoWP",
         "n": 1
       },
       {
@@ -326,6 +335,7 @@
         "x": 3479,
         "y": 2011,
         "dest": "con07d",
+        "dest_wp": "FromThreeWP",
         "n": 1
       },
       {
@@ -348,6 +358,7 @@
         "x": 4363,
         "y": 5017,
         "dest": "con07e",
+        "dest_wp": "FromFourWP",
         "n": 1
       },
       {
@@ -370,6 +381,7 @@
         "x": 2513,
         "y": 3170,
         "dest": "con07f",
+        "dest_wp": "FromFloor5WP",
         "n": 1
       },
       {
@@ -392,6 +404,7 @@
         "x": 2333,
         "y": 1701,
         "dest": "con07g",
+        "dest_wp": "FromFloor6WP",
         "n": 1
       },
       {
@@ -442,6 +455,7 @@
         "x": 3875.3333,
         "y": 4657.3335,
         "dest": "con08a",
+        "dest_wp": "FromTempleWP",
         "n": 3
       },
       {
@@ -502,6 +516,7 @@
         "x": 4330,
         "y": 3439,
         "dest": "con08a",
+        "dest_wp": "FromGolemWP",
         "n": 1
       },
       {
@@ -546,6 +561,7 @@
         "x": 3925.3333,
         "y": 567.3333,
         "dest": "con09c",
+        "dest_wp": "Elevator1",
         "n": 1
       }
     ]
@@ -562,6 +578,7 @@
         "x": 236,
         "y": 4885,
         "dest": "con09b",
+        "dest_wp": "Elevator1",
         "n": 1
       }
     ]
@@ -578,6 +595,7 @@
         "x": 2128,
         "y": 5438,
         "dest": "con09c",
+        "dest_wp": "TunnelWP",
         "n": 1
       },
       {
@@ -703,6 +721,7 @@
         "x": 5324.5,
         "y": 5301.5,
         "dest": "war01a",
+        "dest_wp": "GauntletEntrance",
         "n": 1
       }
     ]
@@ -719,6 +738,7 @@
         "x": 494.5,
         "y": 609.5,
         "dest": "war01a",
+        "dest_wp": "SewerExitWP",
         "n": 1
       }
     ]
@@ -880,18 +900,21 @@
         "x": 241,
         "y": 1530,
         "dest": "war05a",
+        "dest_wp": "SwampEntrance",
         "n": 1
       },
       {
         "x": 1365,
         "y": 5552,
         "dest": "war05c",
+        "dest_wp": "JailWP",
         "n": 3
       },
       {
         "x": 1923,
         "y": 297,
         "dest": "war05c",
+        "dest_wp": "SecretHole",
         "n": 1
       },
       {
@@ -914,6 +937,7 @@
         "x": 4692,
         "y": 644,
         "dest": "war05b",
+        "dest_wp": "VillageWP",
         "n": 1
       }
     ]
@@ -990,12 +1014,14 @@
         "x": 836,
         "y": 4751,
         "dest": "war07a",
+        "dest_wp": "ExitTowerWP",
         "n": 1
       },
       {
         "x": 2642,
         "y": 4287,
         "dest": "war07c",
+        "dest_wp": "From1StartWP",
         "n": 1
       }
     ]
@@ -1012,6 +1038,7 @@
         "x": 3331,
         "y": 2150,
         "dest": "war07b",
+        "dest_wp": "FromTwoWP",
         "n": 1
       },
       {
@@ -1034,6 +1061,7 @@
         "x": 3499,
         "y": 2033,
         "dest": "war07c",
+        "dest_wp": "FromThreeWP",
         "n": 1
       },
       {
@@ -1056,12 +1084,14 @@
         "x": 4477,
         "y": 4897,
         "dest": "war07d",
+        "dest_wp": "FromFourWP",
         "n": 1
       },
       {
         "x": 3648,
         "y": 3889,
         "dest": "war07f",
+        "dest_wp": "FromEWP",
         "n": 1
       }
     ]
@@ -1078,6 +1108,7 @@
         "x": 2514,
         "y": 3169,
         "dest": "war07e",
+        "dest_wp": "FromFloor5WP",
         "n": 1
       },
       {
@@ -1100,6 +1131,7 @@
         "x": 2405,
         "y": 1758,
         "dest": "war07f",
+        "dest_wp": "FromHONWP",
         "n": 1
       },
       {
@@ -1144,6 +1176,7 @@
         "x": 3972.25,
         "y": 1479,
         "dest": "war08b",
+        "dest_wp": "FromIxWP",
         "n": 4
       },
       {
@@ -1172,6 +1205,7 @@
         "x": 3864,
         "y": 4669,
         "dest": "war08a",
+        "dest_wp": "FromTempleWP",
         "n": 3
       },
       {
@@ -1232,6 +1266,7 @@
         "x": 4330,
         "y": 3439,
         "dest": "war08a",
+        "dest_wp": "FromGolemWP",
         "n": 1
       },
       {
@@ -1276,6 +1311,7 @@
         "x": 3925.3333,
         "y": 567.3333,
         "dest": "war09c",
+        "dest_wp": "Elevator1",
         "n": 1
       }
     ]
@@ -1292,6 +1328,7 @@
         "x": 236,
         "y": 4885,
         "dest": "war09b",
+        "dest_wp": "Elevator1",
         "n": 1
       }
     ]
@@ -1308,6 +1345,7 @@
         "x": 2104,
         "y": 5463,
         "dest": "war09c",
+        "dest_wp": "TunnelWP",
         "n": 1
       },
       {
@@ -1422,6 +1460,7 @@
         "x": 1364,
         "y": 5327,
         "dest": "wiz01a",
+        "dest_wp": "FromGalavaWP",
         "n": 1
       },
       {
@@ -1444,6 +1483,7 @@
         "x": 3319,
         "y": 4757,
         "dest": "wiz02a",
+        "dest_wp": "ExitTowerWP",
         "n": 1
       },
       {
@@ -1456,6 +1496,7 @@
         "x": 3250,
         "y": 694,
         "dest": "wiz02c",
+        "dest_wp": "ReturnTo2BWP",
         "n": 1
       },
       {
@@ -1478,12 +1519,14 @@
         "x": 771,
         "y": 5417,
         "dest": "wiz02b",
+        "dest_wp": "From2CWP",
         "n": 1
       },
       {
         "x": 1301,
         "y": 329,
         "dest": "wiz02b",
+        "dest_wp": "3CShortCutWP",
         "n": 1
       }
     ]
@@ -1500,6 +1543,7 @@
         "x": 2321,
         "y": 4855,
         "dest": "wiz03b",
+        "dest_wp": "HideoutEntranceWP",
         "n": 1
       },
       {
@@ -1527,6 +1571,7 @@
         "x": 5438.5,
         "y": 3506.5,
         "dest": "wiz03a",
+        "dest_wp": "HideoutToCaverns1WP",
         "n": 2
       }
     ]
@@ -1548,12 +1593,14 @@
         "x": 1035,
         "y": 4899,
         "dest": "wiz03b",
+        "dest_wp": "HideoutRear",
         "n": 1
       },
       {
         "x": 1461.5,
         "y": 4678.5,
         "dest": "wiz03b",
+        "dest_wp": "HideoutRearWP",
         "n": 2
       }
     ]
@@ -1640,18 +1687,21 @@
         "x": 241,
         "y": 1529,
         "dest": "wiz05a",
+        "dest_wp": "SwampEntrance",
         "n": 1
       },
       {
         "x": 1365,
         "y": 5552,
         "dest": "wiz05c",
+        "dest_wp": "JailWP",
         "n": 3
       },
       {
         "x": 3541.5,
         "y": 5382,
         "dest": "wiz05c",
+        "dest_wp": "SecretHole2",
         "n": 2
       }
     ]
@@ -1668,6 +1718,7 @@
         "x": 4692,
         "y": 644,
         "dest": "wiz05b",
+        "dest_wp": "VillageWP",
         "n": 1
       }
     ]
@@ -1783,6 +1834,7 @@
         "x": 3321,
         "y": 4752,
         "dest": "wiz07f",
+        "dest_wp": "ExitTowerWP",
         "n": 1
       }
     ]
@@ -1815,6 +1867,7 @@
         "x": 1367,
         "y": 5330,
         "dest": "wiz07a",
+        "dest_wp": "FromWiz07FWP",
         "n": 1
       },
       {
@@ -1849,6 +1902,7 @@
         "x": 3979,
         "y": 1472,
         "dest": "wiz08b",
+        "dest_wp": "FromIxWP",
         "n": 3
       },
       {
@@ -1871,6 +1925,7 @@
         "x": 3864,
         "y": 4669,
         "dest": "wiz08a",
+        "dest_wp": "FromTempleWP",
         "n": 3
       },
       {
@@ -1931,6 +1986,7 @@
         "x": 4330,
         "y": 3439,
         "dest": "wiz08a",
+        "dest_wp": "FromGolemWP",
         "n": 1
       },
       {
@@ -1975,6 +2031,7 @@
         "x": 3925.3333,
         "y": 567.3333,
         "dest": "wiz09c",
+        "dest_wp": "Elevator1",
         "n": 1
       }
     ]
@@ -1991,6 +2048,7 @@
         "x": 236,
         "y": 4885,
         "dest": "wiz09b",
+        "dest_wp": "Elevator1",
         "n": 1
       }
     ]
@@ -2007,6 +2065,7 @@
         "x": 2129,
         "y": 5439,
         "dest": "wiz09c",
+        "dest_wp": "TunnelWP",
         "n": 1
       },
       {
