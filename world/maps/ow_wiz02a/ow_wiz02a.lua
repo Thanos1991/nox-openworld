@@ -45,6 +45,8 @@ function OnFrame()
     if d2 < NEAR * NEAR then
         done = true
         p:Print("[Openworld] Taking the road to the forest...")
-        Nox.LoadMap("ow_wiz01a")
+        -- ":FromGalavaWP" places the arrival at the forest's Galava-road
+        -- waypoint (map:Waypoint syntax, see Server.SwitchMap).
+        Nox.LoadMap("ow_wiz01a:FromGalavaWP")
     end
 end
