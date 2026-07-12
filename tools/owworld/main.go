@@ -414,6 +414,12 @@ func main() {
 		}
 		b.WriteString("}\n\n")
 		b.WriteString(luaEngine)
+		// append hand-authored per-zone content (academy, quests, ...) that
+		// defines academyFrame; kept in world/academy/<map>.lua
+		if extra, err := os.ReadFile(filepath.Join(*outDir, "world", "academy", m+".lua")); err == nil {
+			b.WriteString("\n-- ===== hand-authored zone content (world/academy/" + m + ".lua) =====\n")
+			b.Write(extra)
+		}
 		dir := filepath.Join(*outDir, "world", "maps", "ow_"+m)
 		os.MkdirAll(dir, 0o755)
 		if err := os.WriteFile(filepath.Join(dir, "ow_"+m+".lua"), []byte(b.String()), 0o644); err != nil {
@@ -510,6 +516,10 @@ function OnFrame()
                 return
             end
         end
+    end
+    -- optional per-zone content (e.g. the Galava academy) appended below
+    if academyFrame then
+        academyFrame(p, x, y)
     end
 end
 `
