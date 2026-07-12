@@ -18,6 +18,25 @@ Conjurer, Wizard) into one shared, freely traversable world:
 - Hub-based structure: a home settlement with quest-givers, vendors and storage,
   radiating out into the reconnected campaign regions.
 
+## The Open World game mode
+
+The expansion is a **separate game mode**, not a modification of the story:
+the original campaigns stay byte-identical and fully playable.
+
+- The [engine fork](https://github.com/Thanos1991/opennox) adds an
+  **Open World** button to the main menu. It leads to the stock class
+  selection, then starts in that class's openworld zone (wizards: Galava)
+  instead of the campaign intro.
+- `tools/owgen` clones campaign maps into an `ow_` namespace with the
+  compiled story scripts stripped; per-zone Lua in `world/maps/ow_*/`
+  owns transitions (via the fork's `Nox.LoadMap`) and future quest logic.
+- `deploy-world.ps1` regenerates the `ow_` maps from your own game data and
+  deploys maps + scripts to the PC install and (over adb) the Android port.
+  Generated maps contain original game data and are never committed.
+
+Current world: `ow_wiz02a` (Galava) ⇄ `ow_wiz01a` (the forest), with
+warrior/conjurer starting zones cloned but not yet scripted.
+
 ## What's here
 
 - `tools/mapatlas/` — Go tool that dumps every original map into planning artifacts

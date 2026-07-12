@@ -1,8 +1,8 @@
--- [Openworld] wiz02a (Ix, Town of the Wizards) — return gate to wiz01a.
+-- [Openworld] ow_wiz02a — Galava, city of the wizards. Wizard starting zone.
+-- Campaign scripts are stripped from this map; this file owns the zone.
 --
--- The gate places itself: the player's position on map entry is exactly
--- where the wiz01a transition drops them. Walk away to arm the gate, walk
--- back onto the arrival point to travel back. Works for any zone pair.
+-- Travel gate: the player start doubles as the forest road. Walk away to
+-- arm it, step back onto it to travel to the forest (ow_wiz01a).
 
 -- The engine only injects the Nox global when a map has NO Lua file
 -- (see opennox-libs script/lua/vm.go ExecFile); scripts must require it.
@@ -12,7 +12,7 @@ local origin = nil
 local armed = false
 local done = false
 local AWAY = 150 -- units to walk away before the gate arms
-local NEAR = 40  -- proximity that triggers the return transition
+local NEAR = 40  -- proximity that triggers the transition
 
 function OnFrame()
     if done then
@@ -28,7 +28,8 @@ function OnFrame()
     end
     if origin == nil then
         origin = { x = x, y = y }
-        Nox.Players.Print("[Openworld] Return gate to the forest placed here.")
+        p:Print("[Openworld] Galava. The road to the forest is where you stand.")
+        p:Print("[Openworld] Walk away, then return to this spot to travel.")
         return
     end
     local dx = x - origin.x
@@ -37,13 +38,13 @@ function OnFrame()
     if not armed then
         if d2 > AWAY * AWAY then
             armed = true
-            Nox.Players.Print("[Openworld] Return gate armed.")
+            p:Print("[Openworld] The forest road is open. Return to your arrival spot to travel.")
         end
         return
     end
     if d2 < NEAR * NEAR then
         done = true
-        Nox.Players.Print("[Openworld] Returning to the forest...")
-        Nox.LoadMap("wiz01a")
+        p:Print("[Openworld] Taking the road to the forest...")
+        Nox.LoadMap("ow_wiz01a")
     end
 end

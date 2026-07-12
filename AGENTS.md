@@ -53,6 +53,34 @@ Game data (not in git): owner's GOG install at `C:\GOG Games\Nox`.
 - Don't commit game data or derived assets containing original art beyond the
   small map renders used for planning.
 
+## Architecture: the open world is a separate game mode
+
+The open world never touches the original campaign. Instead:
+
+- `tools/owgen` clones campaign maps into an `ow_` namespace (`wiz02a` →
+  `maps/ow_wiz02a/ow_wiz02a.map`), stripping the compiled NoxScript sections
+  (`ScriptObject`, `ScriptData`) — story logic, class gates and one-way
+  transitions gone; everything else byte-identical. Generated maps contain
+  original game data and are NOT committed; `deploy-world.ps1` regenerates
+  them from the local install and pushes maps+scripts to PC and phone.
+- Each `ow_` map dir gets a Lua script (this repo, `world/maps/ow_*/`) that
+  owns the zone: transitions via `Nox.LoadMap`, later quests/flags. Scripts
+  MUST `local Nox = require("Nox.Map.Script.v0")` — the engine only injects
+  the global for maps without a Lua file.
+- The engine fork adds an **Open World** main-menu button (`gui_main_menu.go`,
+  injected via `newWindowFromString` — no game-data edits, button ID 141).
+  It arms `nox_openworld_newgame` (legacy/GAME1.c), which remaps the class
+  start maps inside `nox_xxx_gameSetMapPath_409D70`: wizard → `ow_wiz02a`
+  (Galava), warrior → `ow_war01a`, conjurer → `ow_con01a`. The flag resets
+  every time the main menu shows.
+- Class-select and character creation are the stock flows; Open World always
+  goes straight to class creation (no save-slot list).
+
+Gate placement facts: `data/ow_waypoints.json` has named waypoints per zone.
+wiz01a's `FromGalavaWP` (1246,1413) is the canonical road-to-Galava spot.
+In ow_wiz02a the wizard PlayerStart doubles as the forest gate (self-placing
+script pattern: record spawn, arm at 150 units away, trigger within 40).
+
 ## Current state / next steps
 
 - [x] Reconnaissance dumps (this repo: data/, docs/, renders/)
@@ -61,12 +89,19 @@ Game data (not in git): owner's GOG install at `C:\GOG Games\Nox`.
 - [x] Transition mechanism identified: `InvisibleExitArea` trigger objects (100 maps)
       + script-driven map-switch calls; destinations appear as strings in ScriptData
       (see map_refs in data/maps.json)
-- [ ] Hello-world Lua/NS4 script on a campaign map (verify load on device; the engine
-      logs `[script] loading script(s) for map ...` — look for Go/Lua file discovery
-      in opennox/src script loading)
-- [ ] Two-zone proof: bidirectional transition between two campaign maps (candidate
-      pair: con06a <-> con06b which are already bidirectional, or wiz01a <-> wiz02a)
+- [x] Per-map Lua verified loading on device (first attempt crashed: missing
+      `require` — see world scripts' header comment)
+- [x] `Nox.LoadMap` engine capability (script.MapSwitcher in both forks)
+- [x] Open World as separate mode: menu button, start-map remap, ow_ map set
+      (owgen), wizard start in Galava (ow_wiz02a), gates ow_wiz02a <-> ow_wiz01a
+- [ ] On-device playtest of the Open World wizard start + both gate directions
+- [ ] Strip/neutralize `InvisibleExitArea` trigger objects in ow_ maps if they
+      turn out to misbehave without their scripts
+- [ ] Zone entry should place the player at the matching gate, not PlayerStart
+      (arrivals from the forest should appear at Galava's forest road)
 - [ ] Engine-side persistent world-flag store
-- [ ] Hub town selection (shopkeeper-rich maps are candidates — see notable_objects)
+- [ ] Hub town confirmation (Galava is the wizard candidate; shopkeeper-rich maps
+      are flagged in notable_objects)
+- [ ] Scripts + gates for warrior (ow_war01a) and conjurer (ow_con01a) starts
 - [ ] maprender fails on 85 of 157 maps ("invalid image size 0x0" etc.) — improve
       renderer coverage for complete atlas imagery
