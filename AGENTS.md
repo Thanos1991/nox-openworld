@@ -76,10 +76,26 @@ The open world never touches the original campaign. Instead:
 - Class-select and character creation are the stock flows; Open World always
   goes straight to class creation (no save-slot list).
 
-Gate placement facts: `data/ow_waypoints.json` has named waypoints per zone.
-wiz01a's `FromGalavaWP` (1246,1413) is the canonical road-to-Galava spot.
-In ow_wiz02a the wizard PlayerStart doubles as the forest gate (self-placing
-script pattern: record spawn, arm at 150 units away, trigger within 40).
+## The world generation pipeline (order matters)
+
+1. `tools/owgates` — extracts, per original map, PlayerStart positions and
+   InvisibleExitArea triggers **with their embedded destination map** (the
+   full original transition topology lives in object data). Byte-level record
+   framing is documented in the tool header; note `binenc.Reader.Align` in
+   opennox-libs pads 8 bytes when already aligned (bug) — the tool walks
+   offsets manually. Output: `data/ow_gates.json`.
+2. `tools/owworld` — turns gate data into the world: generates every
+   `world/maps/ow_*/ow_*.lua` (generic multi-gate script: gates arm after the
+   player is 130 units away, hint at 250, travel at 50) and
+   `docs/openworld-map.md` (mermaid + gate tables). One-way campaign
+   transitions get a virtual return gate at the destination's PlayerStart.
+   Script-only story links (wiz07 Underworld cluster) are hand-listed in
+   `extraGates`. A BFS asserts every zone is reachable from the hub (wiz02a).
+3. `tools/owgen` + `deploy-world.ps1` — clone ow_ maps from game data and
+   deploy maps+scripts (PC + phone via adb).
+
+Travel is `Nox.LoadMap("ow_X:@x,y")` — the engine fork supports coordinate
+arrivals (Server.SwitchMap / game.go), landing the player on the twin gate.
 
 ## Current state / next steps
 
@@ -102,9 +118,17 @@ script pattern: record spawn, arm at 150 units away, trigger within 40).
 - [x] Arrival placement via `Nox.LoadMap("map:WaypointName")` (engine-native
       syntax, Server.SwitchMap) — Galava→forest lands at FromGalavaWP;
       forest→Galava lands at PlayerStart which IS the Galava gate
-- [ ] On-device playtest of the Open World wizard start + both gate directions
+- [x] Transit-to-menu bug: SwitchMap must pass the map path WITH ".map" —
+      loaders build "maps/<dir>/<path>" and abort on a bare name (log:
+      "stat ...ow_wiz01a.nxz: no such file")
+- [x] Full wizard region wired: 36 zones, 73 gates, one connected component
+      from the forest to Hecubah's lair (see docs/openworld-map.md)
+- [ ] On-device playtest of the Open World wizard start + gate travel
+- [ ] Warrior/conjurer regions: clone + wire (their zones exist unscripted;
+      wiz08a -> con03a is the natural first bridge)
 - [ ] Strip/neutralize `InvisibleExitArea` trigger objects in ow_ maps if they
-      turn out to misbehave without their scripts
+      turn out to misbehave without their scripts (they carry dest strings but
+      the campaign used scripts to fire them; observed inert so far)
 - [ ] Engine-side persistent world-flag store
 - [ ] Hub town confirmation (Galava is the wizard candidate; shopkeeper-rich maps
       are flagged in notable_objects)
