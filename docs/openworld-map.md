@@ -136,9 +136,9 @@ destination's player start). Solid = real gates on both sides.
 | ow_con03a | 345, 368 | ow_con02a (con02a) | original doorway |
 | ow_con03a | 231, 4646 | ow_con03b (con03b) | original doorway |
 | ow_con03a | 651, 3421 | ow_con04a (con04a) | original doorway |
-| ow_con03a | 481, 414 | ow_con08a (con08a) | virtual (player start) |
+| ow_con03a | 391, 414 | ow_con08a (con08a) | virtual (player start) |
 | ow_con03a | 571, 414 | ow_war08a (war08a) | virtual (player start) |
-| ow_con03a | 391, 414 | ow_wiz08a (wiz08a) | virtual (player start) |
+| ow_con03a | 481, 414 | ow_wiz08a (wiz08a) | virtual (player start) |
 | ow_con03b | 5428, 1748 | ow_con03a (con03a) | original doorway |
 | ow_con04a | 4576, 1861 | ow_con03a (con03a) | virtual (player start) |
 | ow_con04a | 1184, 943 | ow_con04b (con04b) | original doorway |
@@ -175,9 +175,9 @@ destination's player start). Solid = real gates on both sides.
 | ow_con07h | 2333, 1701 | ow_con07g (con07g) | original doorway |
 | ow_con07h | 2149, 2150 | ow_con08a (con08a) | original doorway |
 | ow_con08a | 5440, 3876 | ow_con03a (con03a) | original doorway |
-| ow_con08a | 1018, 3627 | ow_con07h (con07h) | virtual (player start) |
+| ow_con08a | 1108, 3627 | ow_con07h (con07h) | virtual (player start) |
 | ow_con08a | 3979, 1472 | ow_con08b (con08b) | original doorway |
-| ow_con08a | 1108, 3627 | ow_con08e (con08e) | virtual (player start) |
+| ow_con08a | 1018, 3627 | ow_con08e (con08e) | virtual (player start) |
 | ow_con08a | 632, 1920 | ow_con09a (con09a) | original doorway |
 | ow_con08b | 3875, 4657 | ow_con08a (con08a) | original doorway |
 | ow_con08b | 5486, 380 | ow_con08c (con08c) | original doorway |
@@ -196,8 +196,8 @@ destination's player start). Solid = real gates on both sides.
 | ow_con09c | 318, 4960 | ow_con09d (con09d) | virtual (player start) |
 | ow_con09d | 2128, 5438 | ow_con09c (con09c) | original doorway |
 | ow_con09d | 903, 1062 | ow_con10a (con10a) | original doorway |
-| ow_con10a | 5488, 5511 | ow_con09d (con09d) | virtual (player start) |
-| ow_con10a | 5578, 5511 | ow_con10b (con10b) | virtual (player start) |
+| ow_con10a | 5578, 5511 | ow_con09d (con09d) | virtual (player start) |
+| ow_con10a | 5488, 5511 | ow_con10b (con10b) | virtual (player start) |
 | ow_con10b | 3151, 5290 | ow_con10a (con10a) | original doorway |
 | ow_con10b | 3084, 5227 | ow_con10c (con10c) | virtual (player start) |
 | ow_con10c | 1045, 2891 | ow_con10b (con10b) | original doorway |
@@ -254,9 +254,9 @@ destination's player start). Solid = real gates on both sides.
 | ow_war07h | 2621, 4056 | ow_war06b (war06b) | virtual (player start) |
 | ow_war07h | 2870, 3827 | ow_war07a (war07a) | original doorway |
 | ow_war08a | 5440, 3876 | ow_con03a (con03a) | original doorway |
-| ow_war08a | 1087, 3621 | ow_war07g (war07g) | virtual (player start) |
+| ow_war08a | 997, 3621 | ow_war07g (war07g) | virtual (player start) |
 | ow_war08a | 3972, 1479 | ow_war08b (war08b) | original doorway |
-| ow_war08a | 997, 3621 | ow_war08e (war08e) | virtual (player start) |
+| ow_war08a | 1087, 3621 | ow_war08e (war08e) | virtual (player start) |
 | ow_war08a | 1991, 5023 | ow_war09a (war09a) | original doorway |
 | ow_war08b | 5600, 264 | ow_con08b (con08b) | original doorway |
 | ow_war08b | 3864, 4669 | ow_war08a (war08a) | original doorway |
@@ -353,8 +353,8 @@ destination's player start). Solid = real gates on both sides.
 | ow_wiz09c | 334, 4891 | ow_wiz09d (the wastelands) | virtual (player start) |
 | ow_wiz09d | 2129, 5439 | ow_wiz09c (the tunnels) | original doorway |
 | ow_wiz09d | 903, 1062 | ow_wiz10a (the Land of the Dead (I)) | original doorway |
-| ow_wiz10a | 5573, 5500 | ow_wiz09d (the wastelands) | virtual (player start) |
-| ow_wiz10a | 5483, 5500 | ow_wiz10b (the Land of the Dead (II)) | virtual (player start) |
+| ow_wiz10a | 5483, 5500 | ow_wiz09d (the wastelands) | virtual (player start) |
+| ow_wiz10a | 5573, 5500 | ow_wiz10b (the Land of the Dead (II)) | virtual (player start) |
 | ow_wiz10b | 3151, 5278 | ow_wiz10a (the Land of the Dead (I)) | original doorway |
 | ow_wiz10b | 3089, 5230 | ow_wiz10c (the Land of the Dead (III)) | virtual (player start) |
 | ow_wiz10c | 1044, 2889 | ow_wiz10b (the Land of the Dead (II)) | original doorway |

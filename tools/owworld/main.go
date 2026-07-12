@@ -120,8 +120,16 @@ type conn struct {
 	virtual  bool // no original gate; placed at PlayerStart
 }
 
+type Waypoint struct {
+	ID   uint32  `json:"id"`
+	Name string  `json:"name"`
+	X    float32 `json:"x"`
+	Y    float32 `json:"y"`
+}
+
 func main() {
 	gatesPath := flag.String("gates", `data\ow_gates.json`, "gate data from owgates")
+	wpPath := flag.String("waypoints", `data\ow_waypoints.json`, "waypoint dump from owgen")
 	outDir := flag.String("out", `.`, "repo root")
 	flag.Parse()
 
@@ -132,6 +140,40 @@ func main() {
 	var data map[string]*MapGates
 	if err := json.Unmarshal(raw, &data); err != nil {
 		panic(err)
+	}
+	rawWP, err := os.ReadFile(*wpPath)
+	if err != nil {
+		panic(err)
+	}
+	var wps map[string][]Waypoint
+	if err := json.Unmarshal(rawWP, &wps); err != nil {
+		panic(err)
+	}
+	// snapWalkable moves an arrival position to the nearest waypoint of the
+	// destination map: exit-trigger centers can sit inside door frames or
+	// off the walkable edge, and SetPos does not collision-check — players
+	// got stuck. Waypoints are AI path nodes, walkable by construction.
+	snapWalkable := func(m string, p Pos) Pos {
+		best := p
+		bestD := float64(400 * 400) // don't snap further than 400 units
+		found := false
+		for _, w := range wps[m] {
+			dx := float64(w.X - p.X)
+			dy := float64(w.Y - p.Y)
+			d := dx*dx + dy*dy
+			if d < bestD {
+				bestD = d
+				best = Pos{X: w.X, Y: w.Y}
+				found = true
+			}
+		}
+		if !found {
+			if mg := data[m]; mg != nil && len(mg.Starts) > 0 {
+				fmt.Printf("no waypoint near %s@%.0f,%.0f — arriving at player start\n", m, p.X, p.Y)
+				return mg.Starts[0]
+			}
+		}
+		return best
 	}
 	inc := map[string]bool{}
 	for _, m := range include {
@@ -296,7 +338,7 @@ func main() {
 					break
 				}
 			}
-			ap := pairArrival(c, idx, len(group))
+			ap := snapWalkable(c.to, pairArrival(c, idx, len(group)))
 			nm := names[c.to]
 			if nm == "" {
 				nm = c.to

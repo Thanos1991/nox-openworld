@@ -4,8 +4,8 @@
 local Nox = require("Nox.Map.Script.v0")
 
 local GATES = {
-    { x = 5573, y = 5500, dest = "ow_wiz09d:@903,1062", name = "the wastelands" },
-    { x = 5483, y = 5500, dest = "ow_wiz10b:@3151,5278", name = "the Land of the Dead (II)" },
+    { x = 5483, y = 5500, dest = "ow_wiz09d:@911,1070", name = "the wastelands" },
+    { x = 5573, y = 5500, dest = "ow_wiz10b:@3150,5266", name = "the Land of the Dead (II)" },
 }
 
 local NEAR = 50   -- stepping this close to a gate travels

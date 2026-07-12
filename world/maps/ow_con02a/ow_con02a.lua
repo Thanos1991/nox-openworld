@@ -4,8 +4,8 @@
 local Nox = require("Nox.Map.Script.v0")
 
 local GATES = {
-    { x = 1070, y = 3450, dest = "ow_con01a:@4715,2185", name = "con01a" },
-    { x = 5440, y = 3876, dest = "ow_con03a:@345,368", name = "con03a" },
+    { x = 1070, y = 3450, dest = "ow_con01a:@4726,2265", name = "con01a" },
+    { x = 5440, y = 3876, dest = "ow_con03a:@522,522", name = "con03a" },
 }
 
 local NEAR = 50   -- stepping this close to a gate travels

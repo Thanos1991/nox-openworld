@@ -4,7 +4,7 @@
 local Nox = require("Nox.Map.Script.v0")
 
 local GATES = {
-    { x = 2255, y = 5351, dest = "ow_wiz10c:@1103,2830", name = "the Land of the Dead (III)" },
+    { x = 2255, y = 5351, dest = "ow_wiz10c:@976,2959", name = "the Land of the Dead (III)" },
     { x = 862, y = 770, dest = "ow_wiz11a:@1217,4897", name = "Hecubah's lair" },
     { x = 3786, y = 2356, dest = "ow_wiz11a:@1217,4897", name = "Hecubah's lair" },
 }
